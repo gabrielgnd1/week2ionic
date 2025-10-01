@@ -1,0 +1,70 @@
+<
+<ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar color="danger">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title> List </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+ 
+<div id ="content">
+  <ion-list lines="full">
+   <ion-item>
+     <ion-text>
+       
+       Product List per {{today_ind()}}
+     </ion-text>
+     <ion-button size="small" (click)="goYesterday()" [disabled]="is5daysago">
+   <ion-icon name="chevron-back-outline"></ion-icon>
+     </ion-button>
+     <ion-button size ="small"(click)="goReset()" [disabled]>
+      <ion-icon name = "reload-outline"></ion-icon>
+     </ion-button>
+     <ion-button size ="small"(click)="goTommorow()"[disabled]="is5daysfromnow">
+      <ion-icon name = "chevron-forward-outline"></ion-icon>
+     </ion-button>
+     
+
+
+
+   </ion-item>
+   <ion-list lines="full">
+   <ion-item>
+     <ion-text>
+       Product Name <b>{{product.productName}}</b>
+     </ion-text>
+   </ion-item>
+ </ion-list>
+ <ion-list lines="full">
+   <ion-item>
+     <ion-text>
+       Product Price <b>Rp {{product.productPrice}}</b>
+     </ion-text>
+   </ion-item>
+ </ion-list>
+ <ion-list lines="full">
+   <ion-item>
+     <ion-text>
+      Quantity <ion-button size ="small"(click)="quantitySubs()">
+      <ion-icon name = "remove-outline"></ion-icon>
+     </ion-button>{{quantity}}
+     <ion-button size ="small"(click)="quantityAdd()">
+      <ion-icon name = "add-outline"></ion-icon>
+     </ion-button>
+     </ion-text>
+   </ion-item>
+ </ion-list>
+ <ion-list lines="full">
+   <ion-item>
+     <ion-text>
+       Total Amount <b>{{product.total}}</b>
+     </ion-text>
+   </ion-item>
+ </ion-list>
+
+ </ion-list>
+
+</div>
