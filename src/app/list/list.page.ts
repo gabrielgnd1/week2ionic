@@ -16,6 +16,64 @@ interface Product {
 })
 export class ListPage implements OnInit {
 
+  couponcode: string = "000"
+  strvalid: string = "Invalid"
+  discount: number = 0
+  textColor = "red"
+
+
+
+  books = [
+    {
+      title: 'To Kill a Mockingbird',
+      author: 'Harper Lee',
+      publishedDate: new Date('1960-07-11'),
+      price: 7.99,
+      discount: 10
+      
+    },
+    {
+      title: 'The Great Gatsby',
+      author: 'F. Scott Fitzgerald',
+      publishedDate: new Date('1925-04-10'),
+      price: 10.99,
+      discount : 5
+
+    },
+    {
+      title: 'Pride and Prejudice',
+      author: 'Jane Austen',
+      publishedDate: new Date('1813-01-28'),
+      price: 12.75,
+      discount: 15
+      
+    }
+  ]
+
+
+  checkValid(){
+    if(this.couponcode == '1234'){
+      this.strvalid = "valid"
+      this.discount = 5
+      this.textColor = "green"
+      this.books.forEach(book => {
+        book.price -= book.price * this.discount / 100;
+      });
+    }
+    else if(this.couponcode == '6789'){
+      this.strvalid = "valid"
+      this.discount = 10
+      this.textColor = "green"
+      this.books.forEach(book => {
+        book.price -= book.price * this.discount / 100;
+      });
+    }
+    else{
+      this.strvalid = "Invalid"
+      this.discount = 0
+      this.textColor = "red"
+    }
+  }
 
 product:Product = {
    productName: 'Iphone 14',
@@ -49,6 +107,10 @@ quantitySubs(){
   if (this.quantity < 0) this.quantity = 0;
   this.product.total = this.quantity * this.product.productPrice;
 }
+
+
+
+
 
 
 

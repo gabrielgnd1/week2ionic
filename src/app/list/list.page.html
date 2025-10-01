@@ -12,6 +12,45 @@
  
 <div id ="content">
   <ion-list lines="full">
+      <ion-item>
+        <ion-input (keyup) = "checkValid()"labelPlacement="floating" label="Masukkan kode : " [(ngModel)]="couponcode"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-text [ngStyle]="{'color':textColor}">Coupon code {{couponcode}} is {{strvalid}} you get {{discount}}% discount</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-img *ngIf="strvalid=='valid'" src="https://www.animatedimages.org/data/media/1103/animated-congratulation-image-0092.gif"></ion-img>
+      </ion-item>
+</ion-list>
+
+<ion-list *ngFor="let book of books">
+      <ion-list-header>
+        <ion-label><h1>{{book.title}}</h1></ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Author : {{book.author}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Discount: {{book.discount}}%</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <span *ngIf="book.discount; else normalPrice" style="text-decoration: line-through;">
+            Price: ${{book.price}}
+          </span>
+          <ng-template #normalPrice>
+            Price: ${{book.price}}
+          </ng-template>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Price : ${{book.price}}</ion-label>
+      </ion-item>
+  </ion-list>
+
+
+
+  <ion-list lines="full">
    <ion-item>
      <ion-text>
        
