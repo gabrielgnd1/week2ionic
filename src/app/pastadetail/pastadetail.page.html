@@ -9,12 +9,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card>
-    <img alt="Silhouette of mountains" [src]="pastas[index].url" />
+  <ion-card *ngIf="pasta">
+    <img [alt]="pasta.name" [src]="pasta.url" />
     <ion-card-header>
-      <ion-card-title>{{ pastas[index].name }}</ion-card-title>
-      <ion-card-subtitle>{{ pastas[index].description }}</ion-card-subtitle>
-      <ion-card-subtitle>{{ pastas[index].price }}</ion-card-subtitle>
+      <ion-card-title>
+        {{ pasta.name }}
+        <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
+      </ion-card-title>
+      <ion-card-subtitle>{{ pasta.description }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ pasta.price | currency }}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
 </ion-content>

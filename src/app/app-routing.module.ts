@@ -28,9 +28,18 @@ const routes: Routes = [
     loadChildren: () => import('./pasta/pasta.module').then( m => m.PastaPageModule)
   },
   {
+    path: 'pastadetail/:id',
+    loadChildren: () => import('./pastadetail/pastadetail.module').then( m => m.PastadetailPageModule)
+  },
+  {
     path: 'pastadetail/:index',
     loadChildren: () => import('./pastadetail/pastadetail.module').then( m => m.PastadetailPageModule)
   },
+  {
+    path: 'newpasta',
+    loadChildren: () => import('./newpasta/newpasta.module').then( m => m.NewpastaPageModule)
+  },
+
 
 ];
 

@@ -31,6 +31,9 @@
       <ion-accordion *ngFor="let pasta of pastas; let i = index" [value]="pasta.name">
         <ion-item [routerLink]="['/pastadetail', i]" routerLinkActive="router-link-active"  slot="header" color="light">
           <ion-label>{{ pasta.name }}</ion-label>
+          <ion-chip color="danger" *ngIf="pasta.spicy">
+            <ion-label>Spicy</ion-label>
+          </ion-chip>
         </ion-item>
         <div class="ion-padding" slot="content">
           <img [src]="pasta.url" alt="{{ pasta.name }}" />
@@ -41,10 +44,13 @@
     </ion-accordion-group>
 
     <div *ngIf="jenistampilan==='card'">
-      <ion-card *ngFor="let pasta of pastas">
+      <ion-card *ngFor="let pasta of pastas; let i = index" [routerLink]="['/pastadetail', i]" routerLinkActive="router-link-active">
         <img [src]="pasta.url" alt="{{ pasta.name }}" />
         <ion-card-header>
-          <ion-card-title>{{ pasta.name }}</ion-card-title>
+          <ion-card-title>
+            {{ pasta.name }}
+            <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
+          </ion-card-title>
           <ion-card-subtitle>{{ pasta.description }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
@@ -54,14 +60,15 @@
     </div>
 
     <ion-grid *ngIf="jenistampilan=='grid'">
-  <ion-row *ngFor="let pastas2 of chunkArray(pastas, 2)" >
-    <ion-col *ngFor="let pasta of pastas2 " >
+  <ion-row *ngFor="let pastas2 of chunkArray(pastas, 2); let chunkIndex = index" >
+    <ion-col *ngFor="let pasta of pastas2; let itemIndex = index" >
       <ion-list>
-         <ion-item>
+         <ion-item [routerLink]="['/pastadetail', getRealIndex(chunkIndex, itemIndex)]">
            <ion-img [src]="pasta.url"></ion-img>
          </ion-item>
-         <ion-item>
+         <ion-item [routerLink]="['/pastadetail', getRealIndex(chunkIndex, itemIndex)]">
            {{pasta.name}}
+           <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
          </ion-item>
      </ion-list>
     </ion-col>
