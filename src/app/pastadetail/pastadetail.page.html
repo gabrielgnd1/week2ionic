@@ -1,0 +1,22 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Pasta Details </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <img alt="Silhouette of mountains" [src]="pastas[index].url" />
+    <ion-card-header>
+      <ion-card-title>{{ pastas[index].name }}</ion-card-title>
+      <ion-card-subtitle>{{ pastas[index].description }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ pastas[index].price }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+</ion-content>
+
+

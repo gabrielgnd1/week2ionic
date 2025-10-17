@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pasta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pasta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="content">
+    <ion-segment [(ngModel)]="jenistampilan">
+      <ion-segment-button value="accordion">
+        <ion-label>Accordion</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="card">
+        <ion-label>Card</ion-label> 
+      </ion-segment-button>
+      <ion-segment-button value="grid">
+        <ion-label>Grid</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-accordion-group expand="inset" *ngIf="jenistampilan==='accordion'">
+      <ion-accordion *ngFor="let pasta of pastas; let i = index" [value]="pasta.name">
+        <ion-item [routerLink]="['/pastadetail', i]" routerLinkActive="router-link-active"  slot="header" color="light">
+          <ion-label>{{ pasta.name }}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <img [src]="pasta.url" alt="{{ pasta.name }}" />
+          <p>{{ pasta.description }}</p>
+          <p>Price: {{ pasta.price | currency }}</p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <div *ngIf="jenistampilan==='card'">
+      <ion-card *ngFor="let pasta of pastas">
+        <img [src]="pasta.url" alt="{{ pasta.name }}" />
+        <ion-card-header>
+          <ion-card-title>{{ pasta.name }}</ion-card-title>
+          <ion-card-subtitle>{{ pasta.description }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Price: {{ pasta.price | currency }}
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-grid *ngIf="jenistampilan=='grid'">
+  <ion-row *ngFor="let pastas2 of chunkArray(pastas, 2)" >
+    <ion-col *ngFor="let pasta of pastas2 " >
+      <ion-list>
+         <ion-item>
+           <ion-img [src]="pasta.url"></ion-img>
+         </ion-item>
+         <ion-item>
+           {{pasta.name}}
+         </ion-item>
+     </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+  </div>
+</ion-content>
