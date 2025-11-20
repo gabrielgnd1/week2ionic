@@ -1,25 +1,67 @@
-
 <ion-header [translucent]="true">
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title> Pasta Details </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" color="secondary" routerLink="/editpasta/{{pasta.id}}">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" color="danger" (click)="deletepasta(pasta.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngIf="pasta">
-    <img [alt]="pasta.name" [src]="pasta.url" />
-    <ion-card-header>
-      <ion-card-title>
-        {{ pasta.name }}
-        <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
-      </ion-card-title>
-      <ion-card-subtitle>{{ pasta.description }}</ion-card-subtitle>
-      <ion-card-subtitle>{{ pasta.price | currency }}</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+  <div *ngIf="pasta" class="ion-padding">
+    <ion-card>
+      <img [src]="pasta.url" [alt]="pasta.name" />
+      <ion-card-header>
+        <ion-card-title>
+          {{ pasta.name }}
+          <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Description:</strong></p>
+        <p>{{ pasta.description }}</p>
+        <p><strong>Price:</strong> {{ pasta.price | currency }}</p>
+
+        <div *ngIf="pasta.instructions && pasta.instructions.length > 0">
+          <p><strong>Recipe Instructions:</strong></p>
+          <ol>
+            <li *ngFor="let ins of pasta.instructions">{{ins.instruction}}</li>
+          </ol>
+        </div>
+        <!-- Add instruction form -->
+        <div class="ion-padding">
+          <p><strong>Add Instruction</strong></p>
+          <ion-item>
+            <ion-label position="stacked">Step</ion-label>
+            <ion-input type="number" [(ngModel)]="newStep" placeholder="e.g. 1"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Instruction</ion-label>
+            <ion-input [(ngModel)]="newInstruction" placeholder="Write instruction here"></ion-input>
+          </ion-item>
+          <div style="margin-top:8px">
+            <ion-button expand="block" color="danger" (click)="submitInstruction()">Submit Instruction</ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!pasta" class="ion-padding ion-text-center">
+    <ion-spinner></ion-spinner>
+    <p>Loading pasta details...</p>
+  </div>
 </ion-content>
-
-

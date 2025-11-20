@@ -14,6 +14,8 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-searchbar [(ngModel)]="searchText" (ionChange)="filterPastas()" placeholder="Search pasta..."></ion-searchbar>
+
   <div id="content">
     <ion-segment [(ngModel)]="jenistampilan">
       <ion-segment-button value="accordion">
@@ -28,8 +30,8 @@
     </ion-segment>
 
     <ion-accordion-group expand="inset" *ngIf="jenistampilan==='accordion'">
-      <ion-accordion *ngFor="let pasta of pastas; let i = index" [value]="pasta.name">
-        <ion-item [routerLink]="['/pastadetail', i]" routerLinkActive="router-link-active"  slot="header" color="light">
+      <ion-accordion *ngFor="let pasta of pastas; let i = index" [value]="i">
+        <ion-item slot="header" color="light">
           <ion-label>{{ pasta.name }}</ion-label>
           <ion-chip color="danger" *ngIf="pasta.spicy">
             <ion-label>Spicy</ion-label>
@@ -39,6 +41,9 @@
           <img [src]="pasta.url" alt="{{ pasta.name }}" />
           <p>{{ pasta.description }}</p>
           <p>Price: {{ pasta.price | currency }}</p>
+          <ion-button expand="block" [routerLink]="['/pastadetail', i]" color="danger">
+            View Details
+          </ion-button>
         </div>
       </ion-accordion>
     </ion-accordion-group>
@@ -61,12 +66,12 @@
 
     <ion-grid *ngIf="jenistampilan=='grid'">
   <ion-row *ngFor="let pastas2 of chunkArray(pastas, 2); let chunkIndex = index" >
-    <ion-col *ngFor="let pasta of pastas2; let itemIndex = index" >
+    <ion-col *ngFor="let pasta of pastas2; let i = index" >
       <ion-list>
-         <ion-item [routerLink]="['/pastadetail', getRealIndex(chunkIndex, itemIndex)]">
+         <ion-item [routerLink]="['/pastadetail', i]">
            <ion-img [src]="pasta.url"></ion-img>
          </ion-item>
-         <ion-item [routerLink]="['/pastadetail', getRealIndex(chunkIndex, itemIndex)]">
+         <ion-item [routerLink]="['/pastadetail', i]">
            {{pasta.name}}
            <ion-badge color="danger" *ngIf="pasta.spicy">Spicy</ion-badge>
          </ion-item>

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,11 +45,70 @@ export class FoodserviceService {
   ];
 
 
-  constructor() { }
-  addPasta(p_name:string,p_url:string,p_description:string,p_price:number,p_spicy:boolean)
-{
-  this.pastas.push({name:p_name, url:p_url,
-    description:p_description,price:p_price, spicy:p_spicy})
-}
+  constructor(private http: HttpClient) { }
+  addPasta(p_name: string, p_url: string, p_description: string, p_price: number, p_spicy: boolean) {
+    //this.pastas.push({name:p_name, url:p_url,
+    //description:p_description,price:p_price, spicy:p_spicy})
+    //this.pastas.push({name:p_name,url:p_url,description:p_description,price:p_price})
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('name', p_name);
+    body.set('desc', p_description);
+    body.set('url', p_url);
+    body.set('price', p_price.toString());
+    const urlEncodedData = body.toString();
+    return this.http.post(
+      "https://ubaya.cloud/hybrid/160422018/newpasta.php", urlEncodedData, { headers });
+
+  }
+  pastaList(): Observable<any> {
+    return this.http.get("https://ubaya.cloud/hybrid/160422018/pastas.php");
+  }
+
+  pastaDetail(id: number): Observable<any> {
+    return this.http.get("https://ubaya.cloud/hybrid/160422018/pasta_detail.php?id=" + id);
+  }
+  updatePasta(p_id: number, p_name: string, p_url: string, p_description: string, p_price: number) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('id', p_id.toString());
+    body.set('name', p_name);
+    body.set('desc', p_description);
+    body.set('url', p_url);
+    body.set('price', p_price.toString());
+    const urlEncodedData = body.toString();
+
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/update_pasta.php", urlEncodedData, { headers });
+  }
+  addInstruction(pasta_id: number, step: number, instruction: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    // Assumption: server endpoint is pasta_add_instruction.php and expects pasta_id, step, instruction
+    body.set('pasta_id', pasta_id.toString());
+    body.set('step', step.toString());
+    body.set('instruction', instruction);
+    const urlEncodedData = body.toString();
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/pasta_add_instruction.php", urlEncodedData, { headers });
+  }
+  deletePasta(p_id: number) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('id', p_id.toString()); const urlEncodedData = body.toString();
+
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/delete_pasta.php", urlEncodedData, { headers });
+  }
+  login(p_username: string, p_password: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('username', p_username);
+    body.set('password', p_password);
+    const urlEncodedData = body.toString();
+
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/login.php", urlEncodedData, { headers });
+  }
+
+
+
+
 
 }

@@ -7,10 +7,11 @@ import { FoodserviceService } from '../foodservice.service';
   styleUrls: ['./pasta.page.scss'],
 })
 export class PastaPage implements OnInit {
-
-  
-  jenistampilan = "accordion"
+  jenistampilan = "accordion";
   chunkSize = 2;
+  searchText = '';
+  allPastas: any[] = [];  // Store all pastas
+  pastas: any[] = [];     // Filtered pastas to display
 
   chunkArray(arr: any[], chunkSize: number): any[][] {
     const result = [];
@@ -24,16 +25,37 @@ export class PastaPage implements OnInit {
     return chunkIndex * this.chunkSize + itemIndex;
   }
 
-  pastas:any[] = [];
+  filterPastas() {
+    if (!this.searchText) {
+      this.pastas = this.allPastas;  // Show all if search is empty
+    } else {
+      this.pastas = this.allPastas.filter(pasta =>
+        pasta.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+  }
 
-  constructor(private foodService: FoodserviceService) {}
-
+  constructor(private foodService: FoodserviceService) { }
   ionViewWillEnter() {
-    this.pastas = this.foodService.pastas ?? [];
+    this.foodService.pastaList().subscribe((data) => {
+      this.pastas = data;
+    })
   }
 
   ngOnInit() {
-    this.pastas = this.foodService.pastas ?? [];
+    this.loadPastas();
+  }
+
+  loadPastas() {
+    this.foodService.pastaList().subscribe(
+      (data) => {
+        this.allPastas = data;  // Store all pastas
+        this.filterPastas();    // Apply any existing filter
+      },
+      (error) => {
+        console.error('Error loading pastas:', error);
+      }
+    );
   }
 
 }

@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://ubaya.cloud/hybrid/160422018",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
