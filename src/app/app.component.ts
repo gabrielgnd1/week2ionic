@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FoodserviceService } from './foodservice.service';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 
 @Component({
   selector: 'app-root',
@@ -36,6 +38,8 @@ export class AppComponent {
   constructor(private foodservice: FoodserviceService) {
     this.username = localStorage.getItem("app_username") || ""
     this.fullname = localStorage.getItem("app_fullname") || ""
+    defineCustomElements(window);
   }
+  
 }
 

@@ -46,20 +46,15 @@ export class FoodserviceService {
 
 
   constructor(private http: HttpClient) { }
-  addPasta(p_name: string, p_url: string, p_description: string, p_price: number, p_spicy: boolean) {
-    //this.pastas.push({name:p_name, url:p_url,
-    //description:p_description,price:p_price, spicy:p_spicy})
-    //this.pastas.push({name:p_name,url:p_url,description:p_description,price:p_price})
+  addPasta(name: string, url: string, desc: string, price: number, spicy: boolean) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
-    body.set('name', p_name);
-    body.set('desc', p_description);
-    body.set('url', p_url);
-    body.set('price', p_price.toString());
-    const urlEncodedData = body.toString();
-    return this.http.post(
-      "https://ubaya.cloud/hybrid/160422018/newpasta.php", urlEncodedData, { headers });
-
+    body.set('name', name);
+    body.set('desc', desc);
+    body.set('url', url);
+    body.set('price', price.toString());
+    body.set('spicy', spicy ? '1' : '0');
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/newpasta.php", body.toString(), { headers });
   }
   pastaList(): Observable<any> {
     return this.http.get("https://ubaya.cloud/hybrid/160422018/pastas.php");

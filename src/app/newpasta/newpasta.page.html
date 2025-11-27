@@ -60,16 +60,38 @@
           <ion-checkbox [(ngModel)]="new_spicy">Spicy</ion-checkbox>
         </ion-item>
 
-       <ion-item>
-      <ion-button id="btnsubmit" (click)="submitpasta()">Submit</ion-button>
-      <ion-alert
-        trigger="btnsubmit"
-        header="Add Pasta"
-        message="Data Succesfully stored"
-        [buttons]="alertButtons"
-      ></ion-alert>
-</ion-item>
+        <ion-item>
+          <ion-radio-group [(ngModel)]="imageType">
+            <ion-radio value="URL" justify="start" labelPlacement="end"
+              >URL</ion-radio
+            >
+            <ion-radio value="Camera" justify="start" labelPlacement="end"
+              >Camera</ion-radio
+            >
+          </ion-radio-group>
+        </ion-item>
+        <ion-item *ngIf="imageType=='Camera'">
+          <ion-button (click)="captureImage()">Capture Image</ion-button>
+          <ion-img [src]="base64" />
+        </ion-item>
+        <ion-item *ngIf="imageType=='URL'">
+          <ion-input
+            [(ngModel)]="new_url"
+            label="URL"
+            labelPlacement="floating"
+          />
+          <ion-img [src]="new_url" />
+        </ion-item>
 
+        <ion-item>
+          <ion-button id="btnsubmit" (click)="submitpasta()">Submit</ion-button>
+          <ion-alert
+            trigger="btnsubmit"
+            header="Add Pasta"
+            message="Data Succesfully stored"
+            [buttons]="alertButtons"
+          ></ion-alert>
+        </ion-item>
       </ion-list>
     </div>
   </ion-content>
