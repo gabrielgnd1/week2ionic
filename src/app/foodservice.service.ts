@@ -102,8 +102,21 @@ export class FoodserviceService {
     return this.http.post("https://ubaya.cloud/hybrid/160422018/login.php", urlEncodedData, { headers });
   }
 
+  position_xy(): Observable<any> {
+    return this.http.get("https://ubaya.cloud/posisi_xy.php");
+  }
 
+  updateLocation(username: string, latitude: number, longitude: number) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('username', username);
+    body.set('latitude', latitude.toString());
+    body.set('longitude', longitude.toString());
+    return this.http.post("https://ubaya.cloud/hybrid/160422018/update_location.php", body.toString(), { headers });
+  }
 
-
+  getLocation(friend_username: string): Observable<any> {
+    return this.http.get("https://ubaya.cloud/hybrid/160422018/get_location.php?friend_username=" + friend_username);
+  }
 
 }

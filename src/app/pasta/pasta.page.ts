@@ -53,6 +53,7 @@ export class PastaPage implements OnInit {
 }
 
 
+
   ngOnInit() {
     this.loadPastas();
   }
